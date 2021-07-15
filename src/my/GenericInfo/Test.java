@@ -1,15 +1,37 @@
 package my.GenericInfo;
 
-public class Test {
-    //    static TestT testT = new TestT();
-    static Test test = new Test(); //static变量是属于类的，不属于哪一个特定的对像。 只初始化一次。
-    static int it = 2;
+import java.util.List;
 
-    {
-        System.out.println("非静态代码块" + it);
+public class Test<N extends Integer> {
+    private N min, max;
+
+    public N getMin() {
+        return min;
     }
 
-    static {
-        System.out.println("静态代码块" + (it + 1));
+    public N getMax() {
+        return max;
+    }
+
+    public Test(N min, N max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    public void add(N added) {
+        if (min == null || added.doubleValue() < min.doubleValue()) {
+            min = added;
+        }
+        if (max == null || added.doubleValue() > max.doubleValue()) {
+            max = added;
+        }
+    }
+    public void takeList(List<? extends String> list){
+        list.get(1);
+    }
+    public static void main(String[] args) {
+        Test<Integer> t = new Test<Integer>(3, 4);
+        System.out.println(t.getMax());
+        System.out.println(t.getMin());
     }
 }

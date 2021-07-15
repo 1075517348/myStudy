@@ -1,4 +1,8 @@
-package project.studentManage;
+package project.studentManage.domain;
+
+import project.studentManage.bean.Student;
+import project.studentManage.bean.Teacher;
+import project.studentManage.utils.Utils;
 
 import java.util.*;
 
@@ -16,8 +20,8 @@ public class MainApp {
      * @throws java.util.InputMismatchException if input is not number.
      */
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         while (true) {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("1.学生管理系统 2.教师管理系统 3.退出");
             System.out.println("请输入您的选择...");
             int firstChose = scanner.nextInt();

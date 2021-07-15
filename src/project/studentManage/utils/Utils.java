@@ -1,4 +1,8 @@
-package project.studentManage;
+package project.studentManage.utils;
+
+import project.studentManage.bean.Student;
+import project.studentManage.bean.Teacher;
+import project.studentManage.domain.MainApp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +14,7 @@ import java.util.Scanner;
 /**
  * Class {@code Utils} is a toolkit.
  *
- * <p>include some method to creat id,printing {@link project.studentManage.Student} or {@link project.studentManage.Teacher},calculate the age.
+ * <p>include some method to creat id,printing {@link Student} or {@link Teacher},calculate the age.
  *
  * @author Servant
  * @version 1.0
@@ -19,13 +23,13 @@ import java.util.Scanner;
 public class Utils {
 
     /**
-     * Create {@link project.studentManage.Student} / {@link project.studentManage.Teacher} ID.
+     * Create {@link Student} / {@link Teacher} ID.
      * <p>
-     * without repetition id for {@link project.studentManage.Student} / {@link project.studentManage.Teacher}
+     * without repetition id for {@link Student} / {@link Teacher}
      *
      * @param type type number
      */
-    protected int createId(int type) {
+    public int createId(int type) {
         int result;
         if (type == 1) {
             result = ++MainApp.studentId;
@@ -43,7 +47,7 @@ public class Utils {
      *
      * @param birthday String date
      */
-    protected int calculateAge(String birthday) {
+    public int calculateAge(String birthday) {
         int age;
         //定义日历对象
         GregorianCalendar gre = new GregorianCalendar();
@@ -89,7 +93,7 @@ public class Utils {
      *
      * @param id Student's ID
      */
-    protected Student searchStudent(int id) {
+    public Student searchStudent(int id) {
         Student returnStudent = null;
         for (Student student : MainApp.studentList) {
             if (student.getId() == id) {
@@ -112,7 +116,7 @@ public class Utils {
      *
      * @param id Teacher's ID
      */
-    protected Teacher searchTeacher(int id) {
+    public Teacher searchTeacher(int id) {
         Teacher returnTeacher = null;
         for (Teacher teacher : MainApp.teacherList) {
             if (teacher.getId() == id) {
@@ -135,11 +139,11 @@ public class Utils {
      *
      * @param student {@link Student}
      */
-    protected void deleteMember(Student student) {
+    public void deleteMember(Student student) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("【确认】您要删除这条信息么（y/n）?");
         String sureInfo = scanner.nextLine();
-        if (sureInfo.equals("y")) {
+        if ("y".equals(sureInfo)) {
             boolean delete = MainApp.studentList.remove(student);
             if (delete) {
                 System.out.println("【成功】数据已被删除");
@@ -158,7 +162,7 @@ public class Utils {
      *
      * @param teacher {@link Teacher}
      */
-    protected void deleteMember(Teacher teacher) {
+    public void deleteMember(Teacher teacher) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("【确认】您要删除这条信息么（y/n）?");
         String sureInfo = scanner.nextLine();
@@ -181,7 +185,7 @@ public class Utils {
      *
      * @param student {@link Student}
      */
-    protected void editMember(Student student) {
+    public void editMember(Student student) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("请输入修改姓名...");
@@ -215,7 +219,7 @@ public class Utils {
      *
      * @param teacher {@link Teacher}
      */
-    protected void editMember(Teacher teacher) {
+    public void editMember(Teacher teacher) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("请输入修改姓名...");

@@ -1,4 +1,4 @@
-package project.studentManage;
+package project.studentManage.bean;
 
 public abstract class Person {
     //唯一id编号

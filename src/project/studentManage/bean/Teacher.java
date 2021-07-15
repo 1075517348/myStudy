@@ -1,4 +1,4 @@
-package project.studentManage;
+package project.studentManage.bean;
 
 public class Teacher extends Person {
     public Teacher() {
