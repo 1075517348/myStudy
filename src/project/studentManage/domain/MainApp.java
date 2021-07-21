@@ -6,7 +6,7 @@ import project.studentManage.utils.Utils;
 
 import java.util.*;
 
-public class MainApp {
+public class    MainApp {
     public static int studentId = 0;
     public static int teacherId = 0;
     public static LinkedList<Student> studentList = new LinkedList<>();
