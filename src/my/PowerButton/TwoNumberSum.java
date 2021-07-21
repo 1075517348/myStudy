@@ -12,7 +12,7 @@ import java.util.Map;
  * <p>
  * 你可以按任意顺序返回答案。
  */
-public class FirstDayTwoNumberSum {
+public class TwoNumberSum {
     public static void main(String[] args) {
         int[] nums = {3, 2, 4};
         int target = 6;

@@ -1,9 +1,5 @@
 package my.PowerButton;
 
-import my.test.B;
-
-import java.math.BigInteger;
-
 /**
  * 整数反转
  * <p>
@@ -13,7 +9,7 @@ import java.math.BigInteger;
  * <p>
  * 假设环境不允许存储 64 位整数（有符号或无符号）。
  */
-public class TwoDayIntReverse {
+public class IntReverse {
     public static void main(String[] args) {
     }
 
@@ -60,8 +56,11 @@ public class TwoDayIntReverse {
             if (rev < Integer.MIN_VALUE / 10 || rev > Integer.MAX_VALUE / 10) {
                 return 0;
             }
+            //取得末尾的数字
             int digit = x % 10;
+            //原数字去掉末尾的数字
             x /= 10;
+            //算出当前的数字
             rev = rev * 10 + digit;
         }
         return rev;

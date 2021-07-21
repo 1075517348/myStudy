@@ -1,22 +1,36 @@
 package my.MyIO;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class TestMyIO {
+public class TestMyIO implements Serializable {
+    private Tree tree = new Tree();
+
     public static void main(String[] args) {
+        TestMyIO f = new TestMyIO();
         try {
             FileOutputStream fs = new FileOutputStream("word.txt");
-            DataOutputStream ds = new DataOutputStream(fs);
-            ds.writeUTF("使用writeUTF");
-            ds.writeChars("使用writeChars");
-            ds.writeBytes("使用writeByte");
-            ds.close();
-            FileInputStream fis = new FileInputStream("word.txt");
-            DataInputStream dis = new DataInputStream(fis);
-            System.out.println(dis.readUTF());
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(f);
+            os.close();
+            fs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        try {
+//            FileOutputStream fs = new FileOutputStream("word.txt");
+//            DataOutputStream ds = new DataOutputStream(fs);
+//            ds.writeUTF("使用writeUTF");
+//            ds.writeChars("使用writeChars");
+//            ds.writeBytes("使用writeByte");
+//            ds.close();
+//            FileInputStream fis = new FileInputStream("word.txt");
+//            DataInputStream dis = new DataInputStream(fis);
+//            System.out.println(dis.readUTF());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         /*File file = new File("word.txt");
         String[] str = {"测试", "文本", "单行"};
@@ -98,3 +112,6 @@ public class TestMyIO {
     }
 }
 
+class Tree {
+
+}

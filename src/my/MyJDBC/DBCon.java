@@ -28,6 +28,11 @@ public class DBCon {
     static final String USER = "root";
     static final String PASS = "123456";
 
+    /**
+     * 一个数据库连接方法
+     *
+     * @return 返回一个数据库连接
+     */
     public static Connection JavaCon() {
         try {
             //加载驱动程序
@@ -44,6 +49,112 @@ public class DBCon {
         }
     }
 
+    /**
+     * 向数据库添加数据
+     *
+     * @return 返回插入是否成功的boolean值
+     */
+    public static boolean insertData() {
+        //上面访问数据库实例的方法调用获取一个连接对象实例
+        Connection conn = JavaCon();
+        //在连接对象的基础上创建会话对象
+        try {
+            Statement stmt = conn.createStatement();
+            //插入数据库的SQL语句
+            String sql = "Insert into Test VALUES('1','名字','性别','1989-10-13')";
+            //插入数据库，并返回受影响行数
+            int rs = stmt.executeUpdate(sql);
+            //关闭会话对象
+            stmt.close();
+            //关闭连接对象
+            conn.close();
+            //如果受影响的数据大于0，就插入成功，否则失败
+            return rs > 0 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 删除数据库数据
+     *
+     * @return 返回删除是否成功的boolean值
+     */
+    public static boolean deleteData() {
+        //上面访问数据库实例的方法调用获取一个连接对象实例
+        Connection conn = JavaCon();
+        try {
+            //在连接对象的基础上创建会话对象
+            Statement stmt = conn.createStatement();
+            //删除数据的SQL语句
+            String sql = "DELETE FROM Test WHERE id=1";
+            //执行，并返回受影响行数
+            int rs = stmt.executeUpdate(sql);
+            //关闭会话对象
+            stmt.close();
+            //关闭连接对象
+            conn.close();
+            //如果受影响的数据大于0，就删除成功，否则失败
+            return rs > 0 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 修改数据库数据
+     *
+     * @return 返回修改是否成功的boolean值
+     */
+    public static boolean editData() {
+        //上面访问数据库实例的方法调用获取一个连接对象实例
+        Connection conn = JavaCon();
+        try {
+            //在连接对象的基础上创建会话对象
+            Statement stmt = conn.createStatement();
+            //修改数据的SQL语句
+            String sql = "UPDATE Test SET name='梁文浩' WHERE id=1";
+            //执行，并返回受影响行数
+            int rs = stmt.executeUpdate(sql);
+            //关闭会话对象
+            stmt.close();
+            //关闭连接对象
+            conn.close();
+            //如果受影响的数据大于0，就修改成功，否则失败
+            return rs > 0 ? true : false;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 查询数据库数据
+     */
+    public static void queryData() {
+        //上面访问数据库实例的方法调用获取一个连接对象实例
+        Connection conn = JavaCon();
+        try {
+            //在连接对象的基础上创建会话对象
+            Statement stmt = conn.createStatement();
+            //查询数据库的sql执行语句
+            String sql = "SELECT * FROM Test;";
+            //调用查询方法获得结果集
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println("ID:" + rs.getInt("pid") + "name:" + rs.getString("name"));
+            }
+            //关闭会话对象
+            stmt.close();
+            //关闭连接对象
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         try {
             //加载驱动程序
@@ -52,7 +163,7 @@ public class DBCon {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from func");
-            while(rs.next()){
+            while (rs.next()) {
 
             }
             conn.close();
