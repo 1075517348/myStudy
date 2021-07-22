@@ -9,7 +9,7 @@ package my.PowerButton;
  * <p>
  * -121反过来是123-，所以也不是.
  */
-public class isPalindrome {
+public class IsPalindrome {
     public static void main(String[] args) {
         System.out.println(isPalindrome(10));
     }
