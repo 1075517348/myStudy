@@ -13,21 +13,25 @@ package my.PowerButton;
  */
 public class MergeTwoLists {
     public static void main(String[] args) {
-
-
+        ListNode listNode = null;
+        ListNode listNode1 = new ListNode(0);
+        ListNode a = mergeTwoListsT(listNode, listNode1);
     }
 
     /**
-     * Definition for singly-linked list.
-     * public class ListNode {
-     * int val;
-     * ListNode next;
-     * ListNode() {}
-     * ListNode(int val) { this.val = val; }
-     * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-     * }
+     * 我的解法，我感觉十分一般
+     *
+     * @param l1
+     * @param l2
+     * @return
      */
-    public ListNode mergeTwoListsT(ListNode l1, ListNode l2) {
+    public static ListNode mergeTwoListsT(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 != null) {
+            return l2;
+        }
+        if (l1 != null && l2 == null) {
+            return l1;
+        }
         ListNode list = l1;
         ListNode list2 = l2;
         while (list != null) {
@@ -41,44 +45,6 @@ public class MergeTwoLists {
             list = list.next;
         }
         return insertionSortList(l1);
-    }
-
-    //链表的快速排序
-    public static ListNode quickSort(ListNode begin, ListNode end) {
-        //判断为空，判断是不是只有一个节点
-        if (begin == null || end == null || begin == end)
-            return begin;
-        //从第一个节点和第一个节点的后面一个几点
-        //begin指向的是当前遍历到的最后一个<= nMidValue的节点
-        ListNode first = begin;
-        ListNode second = begin.next;
-
-        int nMidValue = begin.val;
-        //结束条件，second到最后了
-        while (second != end.next && second != null) {//结束条件
-            //一直往后寻找<=nMidValue的节点，然后与fir的后继节点交换
-            if (second.val < nMidValue) {
-                first = first.next;
-                //判断一下，避免后面的数比第一个数小，不用换的局面
-                if (first != second) {
-                    int temp = first.val;
-                    first.val = second.val;
-                    second.val = temp;
-                }
-            }
-            second = second.next;
-        }
-        //判断，有些情况是不用换的，提升性能
-        if (begin != first) {
-            int temp = begin.val;
-            begin.val = first.val;
-            first.val = temp;
-        }
-        //前部分递归
-        quickSort(begin, first);
-        //后部分递归
-        quickSort(first.next, end);
-        return begin;
     }
 
     //链表的插入排序
@@ -116,66 +82,65 @@ public class MergeTwoLists {
         }
         return aux.next;
     }
-    //链表的归并排序
 
-    //归并排序
-    public ListNode mergeSort(ListNode head) {
-        if (head == null || head.next == null) return head;
-
-        ListNode mid = getMid(head);//获取链表中间节点
-
-        //把链表从之间拆分为两个链表：head和second两个子链表
-        ListNode second = mid.next;
-        mid.next = null;
-
-        //对两个子链表排序
-        ListNode left = mergeSort(head);
-        ListNode right = mergeSort(second);
-
-        return merge(right, left);
+    /**
+     * 官方解法
+     * 方法1：递归
+     * 如果 l1 或者 l2 一开始就是空链表 ，那么没有任何操作需要合并，所以我们只需要返回非空链表。否则，我们要判断 l1 和 l2 哪一个链表的头节点的值更小，然后递归地决定下一个添加到结果里的节点。如果两个链表有一个为空，递归结束。
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        } else if (l2 == null) {
+            return l1;
+        } else if (l1.val < l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
     }
 
-    //两个有序链表的归并
-    private ListNode merge(ListNode l1, ListNode l2) {
-        //辅助节点，排好序的节点将会链接到dummy后面
-        ListNode dummy = new ListNode(0);
-
-        ListNode tail = dummy;//tail指向最后一个排好序的节点
+    /**
+     * 官方解法
+     * 方法2：迭代
+     * 首先，我们设定一个哨兵节点 prehead ，这可以在最后让我们比较容易地返回合并后的链表。我们维护一个 prev 指针，我们需要做的是调整它的 next 指针。然后，我们重复以下过程，直到 l1 或者 l2 指向了 null ：如果 l1 当前节点的值小于等于 l2 ，我们就把 l1 当前的节点接在 prev 节点的后面同时将 l1 指针往后移一位。否则，我们对 l2 做同样的操作。不管我们将哪一个元素接在了后面，我们都需要把 prev 向后移一位。
+     * <p>
+     * 在循环终止的时候， l1 和 l2 至多有一个是非空的。由于输入的两个链表都是有序的，所以不管哪个链表是非空的，它包含的所有元素都比前面已经合并链表中的所有元素都要大。这意味着我们只需要简单地将非空链表接在合并链表的后面，并返回合并链表即可。
+     */
+    public ListNode mergeTwoListsF(ListNode l1, ListNode l2) {
+        ListNode prehead = new ListNode(-1);
+        ListNode prev = prehead;
         while (l1 != null && l2 != null) {
             if (l1.val <= l2.val) {
-                tail.next = l1;
+                prev.next = l1;
                 l1 = l1.next;
             } else {
-                tail.next = l2;
+                prev.next = l2;
                 l2 = l2.next;
             }
-            tail = tail.next; //移动tail指针
+            prev = prev.next;
         }
 
-        if (l1 != null)
-            tail.next = l1;
-        else
-            tail.next = l2;
+        // 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+        prev.next = l1 == null ? l2 : l1;
 
-        return dummy.next;
-
-    }
-
-    //返回链表之间节点
-    private ListNode getMid(ListNode head) {
-        if (head == null || head.next == null) return head;
-
-        ListNode slow = head;
-        ListNode faster = head.next;
-        while (faster != null && faster.next != null) {
-            slow = slow.next;
-            faster = faster.next.next;
-        }
-        return slow;
+        return prehead.next;
     }
 
 }
 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class ListNode {
     int val;
     ListNode next;
