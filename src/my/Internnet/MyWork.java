@@ -1,18 +1,16 @@
 package my.Internnet;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 
 public class MyWork {
-    public static void main(String[] args) {
-        // getPortInfo(8888);
-        openServerSocket();
+    public static void main(String[] args) throws Exception {
+
     }
 
     /**
@@ -54,15 +52,14 @@ public class MyWork {
             byte[] bys = new byte[1024];
             int len = input.read(bys);
             System.out.println("客户端信息：" + new String(bys, 0, len));
-            OutputStream out = server.getOutputStream();
-            byte[] obys = new String("测试").getBytes(StandardCharsets.UTF_8);
-            out.write(obys);
+            DataOutputStream out = new DataOutputStream(server.getOutputStream());
+            String str = "123";
+            out.writeChars(str);
+            System.out.println("返回信息完毕！");
             server.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    /**
-     * 编写聊天室程序
-     */
+
 }
